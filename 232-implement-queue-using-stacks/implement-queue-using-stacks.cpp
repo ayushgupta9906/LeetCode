@@ -1,42 +1,40 @@
-#include <stack>
-
 class MyQueue {
 private:
-    std::stack<int> inbox;
-    std::stack<int> outbox;
+    stack<int>stack1;
+    stack<int>stack2;
 
 public:
+    
     MyQueue() {}
 
     void push(int x) {
-        inbox.push(x);
+        while (!stack1.empty()) {
+            stack2.push(stack1.top());
+            stack1.pop();
+        }
+        stack1.push(x);
+        while (!stack2.empty()) {
+            stack1.push(stack2.top());
+            stack2.pop();
+        }
     }
 
     int pop() {
-        if (outbox.empty()) {
-            while (!inbox.empty()) {
-                outbox.push(inbox.top());
-                inbox.pop();
-            }
-        }
-        int val = outbox.top();
-        outbox.pop();
-        return val;
+        int temp = stack1.top();
+        stack1.pop();
+        return temp;
     }
-
+    
     int peek() {
-        if (outbox.empty()) {
-            while (!inbox.empty()) {
-                outbox.push(inbox.top());
-                inbox.pop();
-            }
-        }
-        return outbox.top();
+        return stack1.top();
+        
+    }
+    
+    bool empty() {
+        return stack1.empty();
+        
     }
 
-    bool empty() {
-        return inbox.empty() && outbox.empty();
-    }
 };
 
 
