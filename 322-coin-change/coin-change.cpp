@@ -1,6 +1,5 @@
 int CalculateCoinChange(vector<int>& coins, int rem, vector<int>& counter) {
-    // Helper function that calculates amount left to be calculated
-    // and tells what it's value can be.
+
     if (rem < 0) {
         return -1;
     }
