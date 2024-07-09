@@ -1,21 +1,20 @@
+#include <vector>
+#include <algorithm>
+
 class Solution {
 public:
-    int lengthOfLIS(std::vector<int>& nums) {
-        if (nums.empty()) {
-            return 0;
-        }
+    int lengthOfLIS(const std::vector<int>& nums) {
+        std::vector<int> lis;
 
-        int n = nums.size();
-        std::vector<int> dp(n, 1);
-
-        for (int i = 1; i < n; ++i) {
-            for (int j = 0; j < i; ++j) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = std::max(dp[i], dp[j] + 1);
-                }
+        for (int num : nums) {
+            auto it = std::lower_bound(lis.begin(), lis.end(), num);
+            if (it == lis.end()) {
+                lis.push_back(num);
+            } else {
+                *it = num;
             }
         }
 
-        return *std::max_element(dp.begin(), dp.end());
+        return lis.size();
     }
 };
