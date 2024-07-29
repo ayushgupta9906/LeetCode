@@ -1,18 +1,18 @@
-
 class Solution {
 public:
-    int lengthOfLIS(const std::vector<int>& nums) {
-        std::vector<int> lis;
-
-        for (int num : nums) {
-            auto it = std::lower_bound(lis.begin(), lis.end(), num);
-            if (it == lis.end()) {
-                lis.push_back(num);
-            } else {
-                *it = num;
+    int lengthOfLIS(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> dp(n,1);
+        int i=1,j=0;
+        for(int i=1;i<n;i++){
+            while(j<i){
+                if(nums[i]>nums[j]){
+                    dp[i]=max(dp[i],dp[j]+1);
+                }
+                j++;
             }
+            j=0;
         }
-
-        return lis.size();
+        return *max_element(dp.begin(),dp.end());
     }
 };
