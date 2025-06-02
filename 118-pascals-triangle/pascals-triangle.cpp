@@ -1,6 +1,5 @@
 class Solution {
 public:
-    // Function to generate a single row of Pascal's Triangle
     vector<int> generateRow(int rowNum) {
         long long ans = 1;
         vector<int> ansRow;
@@ -13,7 +12,6 @@ public:
         return ansRow;
     }
 
-    // Function to generate the entire Pascal's Triangle
     vector<vector<int>> generate(int numRows) {
         vector<vector<int>> ans;
         for (int i = 1; i <= numRows; i++) {
