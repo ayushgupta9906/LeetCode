@@ -3,15 +3,15 @@ public:
     bool isAnagram(string s, string t) {
         if (s.size() != t.size()) return false;
 
-        vector<int>count(26,0);
+        unordered_map<char,int>freq;
         for(int i=0;i<s.size();i++){
-            count[s[i]-'a']++;
-            count[t[i]-'a']--;
+            freq[s[i]-'a']++;
+            freq[t[i]-'a']--;
 
         }
 
-        for(int c:count){
-            if(c!=0)return false;
+        for(auto it:freq){
+            if(it.second!=0)return false;
 
         }
         return true;
