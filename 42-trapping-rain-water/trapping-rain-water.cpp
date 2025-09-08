@@ -1,29 +1,36 @@
 class Solution {
 public:
-    void damn(vector<int> &h, vector<int> &right, vector<int> &left){
-        int n = h.size();
-        int mx = -1;
-        for(int i=0; i<n; i++){
-            left[i] = mx;
-            mx = max(mx, h[i]);
-        }
-        mx = -1;
-        for(int i=n-1; i>=0; i--){
-            right[i] = mx;
-            mx = max(mx, h[i]);
-        }
-    }
-
     int trap(vector<int>& height) {
-        int n = height.size();
-        vector<int> right(n), left(n);
-        damn(height, right, left);
-        int ans = 0;
+        int n=height.size();
+        int left=0,right=n-1;
+        int leftMax=0,rightMax=0;
+        int water=0;
 
-        for(int i=0; i<n; i++){
-            if(min(right[i], left[i])>height[i])
-            ans += min(right[i], left[i]) - height[i];
+        while(left<right){
+            if(height[left]<height[right]){
+                if(height[left]>=leftMax){
+                    leftMax=height[left];
+                }
+                else{
+                    water+=leftMax-height[left];
+
+                }
+                    left++;
+
+
+            }
+            else{
+                if(height[right]>=rightMax){
+                    rightMax=height[right];
+                }
+                else{
+                    water+=rightMax-height[right];
+                }
+                right--;
+            }
         }
-        return ans;
+        return water;
+
+        
     }
 };
