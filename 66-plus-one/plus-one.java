@@ -1,24 +1,19 @@
 class Solution {
     public int[] plusOne(int[] digits) {
 
-        StringBuilder sb = new StringBuilder();
+        for (int i = digits.length - 1; i >= 0; i--) {
 
-        for (int d : digits) {
-            sb.append(d);
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;
+            }
+
+            digits[i] = 0;
         }
 
-        java.math.BigInteger num = new java.math.BigInteger(sb.toString());
+        int[] ans = new int[digits.length + 1];
+        ans[0] = 1;
 
-        num = num.add(java.math.BigInteger.ONE);
-
-        String ans = num.toString();
-
-        int[] result = new int[ans.length()];
-
-        for (int i = 0; i < ans.length(); i++) {
-            result[i] = ans.charAt(i) - '0';
-        }
-
-        return result;
+        return ans;
     }
 }
