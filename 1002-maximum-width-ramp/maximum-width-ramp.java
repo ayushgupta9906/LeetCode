@@ -9,8 +9,6 @@ class Solution {
         }
 
         vp.sort((a, b) -> a[0] - b[0]);
-
-    
         int minIndex = vp.get(0)[1];
         for (int i = 1; i < n; i++) {
             int currentIndex = vp.get(i)[1];
