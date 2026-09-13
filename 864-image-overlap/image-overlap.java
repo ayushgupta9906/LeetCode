@@ -1,24 +1,41 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Solution {
     public int largestOverlap(int[][] img1, int[][] img2) {
         int n = img1.length;
-        // collect every coordinate that holds a 1
-        List<int[]> A = new ArrayList<>();
-        List<int[]> B = new ArrayList<>();
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                if (img1[i][j] == 1) A.add(new int[]{i, j});
-                if (img2[i][j] == 1) B.add(new int[]{i, j});
+        List<int[]> ones1 = new ArrayList<>();
+        List<int[]> ones2 = new ArrayList<>();
+
+        // Step 1: Collect coordinates of all 1s in both images
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                if (img1[r][c] == 1) {
+                    ones1.add(new int[]{r, c});
+                }
+                if (img2[r][c] == 1) {
+                    ones2.add(new int[]{r, c});
+                }
             }
         }
-        int[][] cnt = new int[2 * n][2 * n];
-        int best = 0;
-        for (int[] a : A) {
-            for (int[] b : B) {
-                int dx = b[0] - a[0] + n;
-                int dy = b[1] - a[1] + n;
-                best = Math.max(best, ++cnt[dx][dy]);
+
+        // Step 2: Use a 2D array to count the frequency of each translation offset (dr, dc)
+        // Offset ranges for dr and dc are from -(n-1) to (n-1).
+        // Adding n shifts the range to [1, 2n-1], so a size of 2*n + 1 is sufficient.
+        int[][] offsetCount = new int[2 * n + 1][2 * n + 1];
+        int maxOverlap = 0;
+
+        // Step 3: Compute translation vectors between every pair of 1s
+        for (int[] p1 : ones1) {
+            for (int[] p2 : ones2) {
+                int dr = p2[0] - p1[0];
+                int dc = p2[1] - p1[1];
+                
+                offsetCount[dr + n][dc + n]++;
+                maxOverlap = Math.max(maxOverlap, offsetCount[dr + n][dc + n]);
             }
         }
-        return best;
+
+        return maxOverlap;
     }
 }
