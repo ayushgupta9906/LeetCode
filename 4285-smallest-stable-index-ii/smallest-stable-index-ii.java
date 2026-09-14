@@ -3,25 +3,19 @@ public class Solution {
         int n = nums.length;
         if (n == 0) return -1;
         
-        int[] prefixMax = new int[n];
+        // Compute suffix minima from right to left
         int[] suffixMin = new int[n];
-        
-        // Fill prefixMax array
-        prefixMax[0] = nums[0];
-        for (int i = 1; i < n; i++) {
-            prefixMax[i] = Math.max(prefixMax[i - 1], nums[i]);
-        }
-        
-        // Fill suffixMin array
         suffixMin[n - 1] = nums[n - 1];
         for (int i = n - 2; i >= 0; i--) {
             suffixMin[i] = Math.min(suffixMin[i + 1], nums[i]);
         }
         
-        // Find smallest stable index
+        // Compute prefix maxima on the fly and check stability condition
+        int runningMax = Integer.MIN_VALUE;
         for (int i = 0; i < n; i++) {
-            if (prefixMax[i] - suffixMin[i] <= k) {
-                return i;
+            runningMax = Math.max(runningMax, nums[i]);
+            if (runningMax - suffixMin[i] <= k) {
+                return i; // Early exit on the first stable index
             }
         }
         
