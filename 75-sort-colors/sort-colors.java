@@ -1,22 +1,14 @@
-public class Solution {
+class Solution {
     public void sortColors(int[] nums) {
-        int n = nums.length;
-        // Outer loop for each pass
-        for (int i = 0; i < n - 1; i++) {
-            boolean swapped = false;
-            // Inner loop to compare adjacent elements
-            for (int j = 0; j < n - 1 - i; j++) {
+        // Simple Bubble Sort as a baseline brute force approach
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = 0; j < nums.length - i - 1; j++) {
+                // If adjacent elements are out of order, swap them
                 if (nums[j] > nums[j + 1]) {
-                    // Swap elements if they are in the wrong order
                     int temp = nums[j];
                     nums[j] = nums[j + 1];
                     nums[j + 1] = temp;
-                    swapped = true;
                 }
-            }
-            // If no elements were swapped, array is already sorted
-            if (!swapped) {
-                break;
             }
         }
     }
